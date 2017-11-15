@@ -1,12 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
     public float speed; 
     private Rigidbody rb;
     private Animator anim;
+
+    private int count;
+
+    public Text winText;
+    public Text countText;
 
     private float inputH;
     private float inputV;
@@ -15,6 +21,10 @@ public class PlayerController : MonoBehaviour {
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
+
+        count = 0;
+        setCountText();
+        winText.text = "";
     }
 
     //Called before a frame is rendered
@@ -22,6 +32,20 @@ public class PlayerController : MonoBehaviour {
     {
         inputH = Input.GetAxis("Horizontal");
         inputV = Input.GetAxis("Vertical");
+        
+        if (Input.GetKey(KeyCode.Space))
+        {
+            anim.Play("FreeVoxelGirl-jump");
+        }
+        if (Input.GetKey(KeyCode.Q))
+        {
+            anim.Play("FreeVoxelGirl-death");
+        }
+
+        if (Input.GetKey(KeyCode.E))
+        {
+            anim.Play("FreeVoxelGirl-damage");
+        }
 
         anim.SetFloat("inputH", inputH);
         anim.SetFloat("inputV", inputV);
@@ -58,7 +82,20 @@ public class PlayerController : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Pick Up"))
+        if (other.gameObject.CompareTag("Pick Up")) {
             other.gameObject.SetActive(false);
+            count += 1;
+            setCountText();
+        }
+            
+    }
+
+    void setCountText()
+    {
+        countText.text = "Count: " + count.ToString();
+        if(count >= 8)
+        {
+            winText.text = "You Win!";
+        }
     }
 }
