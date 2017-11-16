@@ -2,4 +2,4 @@
 
 Press "Space" to Jump
 Press "Q" to Lie Down.
-"WASD" to move around the game scene. 
+"WASD" to move around.
