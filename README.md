@@ -1,4 +1,4 @@
-# school-ftsm2
+# school-ftsm-unity
 
 --Controls--
 
